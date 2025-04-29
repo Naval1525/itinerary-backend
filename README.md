@@ -38,55 +38,247 @@ uvicorn app.main:app --reload
 
 ## API Endpoints
 
-- `POST /api/v1/itineraries/` - Create a new itinerary
-- `GET /api/v1/itineraries/` - Get all itineraries
-- `GET /api/v1/itineraries/{trip_id}` - Get a specific itinerary
+**Base URL:**  
+`http://localhost:8000/api/v1`
 
-## Example Usage
+- **Create a new itinerary (POST):**  
+  `http://localhost:8000/api/v1/itineraries/`
+- **Get all itineraries (GET):**  
+  `http://localhost:8000/api/v1/itineraries/`
+- **Get a specific itinerary by ID (GET):**  
+  `http://localhost:8000/api/v1/itineraries/{trip_id}`
 
-Create a new itinerary:
-```bash
-curl -X POST "http://localhost:8000/api/v1/itineraries/" \
-     -H "Content-Type: application/json" \
-     -d '{
-           "title": "Bali Adventure",
-           "description": "7-day trip to Bali",
-           "start_date": "2024-06-01T00:00:00",
-           "end_date": "2024-06-08T00:00:00",
-           "days": [
-             {
-               "day_number": 1,
-               "date": "2024-06-01T00:00:00",
-               "hotel": {
-                 "name": "The Mulia",
-                 "address": "Nusa Dua, Bali",
-                 "check_in": "2024-06-01T14:00:00",
-                 "check_out": "2024-06-02T12:00:00",
-                 "room_type": "Ocean Suite"
-               },
-               "transfers": [
-                 {
-                   "type": "airport",
-                   "from_location": "Ngurah Rai Airport",
-                   "to_location": "The Mulia",
-                   "departure_time": "2024-06-01T13:00:00",
-                   "arrival_time": "2024-06-01T14:00:00"
-                 }
-               ],
-               "activities": [
-                 {
-                   "title": "Welcome Dinner",
-                   "description": "Traditional Balinese dinner",
-                   "start_time": "2024-06-01T19:00:00",
-                   "end_time": "2024-06-01T22:00:00",
-                   "location": "The Mulia Restaurant",
-                   "cost": 75.00
-                 }
-               ]
-             }
-           ]
-         }'
+**Interactive API Docs:**  
+- Swagger UI: [http://localhost:8000/docs](http://localhost:8000/docs)  
+- ReDoc: [http://localhost:8000/redoc](http://localhost:8000/redoc)
+
+---
+
+## API Documentation
+
+### POST `/api/v1/itineraries/`
+
+**Create a new itinerary**
+
+**Sample Request:**
+```json
+{
+  "title": "Bali Adventure",
+  "description": "7-day trip to Bali",
+  "start_date": "2024-06-01T00:00:00",
+  "end_date": "2024-06-08T00:00:00",
+  "days": [
+    {
+      "day_number": 1,
+      "date": "2024-06-01T00:00:00",
+      "hotel": {
+        "name": "The Mulia",
+        "address": "Nusa Dua, Bali",
+        "check_in": "2024-06-01T14:00:00",
+        "check_out": "2024-06-02T12:00:00",
+        "room_type": "Ocean Suite"
+      },
+      "transfers": [
+        {
+          "type": "airport",
+          "from_location": "Ngurah Rai Airport",
+          "to_location": "The Mulia",
+          "departure_time": "2024-06-01T13:00:00",
+          "arrival_time": "2024-06-01T14:00:00"
+        }
+      ],
+      "activities": [
+        {
+          "title": "Welcome Dinner",
+          "description": "Traditional Balinese dinner",
+          "start_time": "2024-06-01T19:00:00",
+          "end_time": "2024-06-01T22:00:00",
+          "location": "The Mulia Restaurant",
+          "cost": 75.00
+        }
+      ]
+    }
+  ]
+}
 ```
+
+**Sample Response:**
+```json
+{
+  "id": 1,
+  "title": "Bali Adventure",
+  "description": "7-day trip to Bali",
+  "start_date": "2024-06-01T00:00:00",
+  "end_date": "2024-06-08T00:00:00",
+  "created_at": "2024-05-01T12:00:00",
+  "updated_at": null,
+  "days": [
+    {
+      "id": 1,
+      "trip_id": 1,
+      "day_number": 1,
+      "date": "2024-06-01T00:00:00",
+      "hotel": {
+        "id": 1,
+        "day_id": 1,
+        "name": "The Mulia",
+        "address": "Nusa Dua, Bali",
+        "check_in": "2024-06-01T14:00:00",
+        "check_out": "2024-06-02T12:00:00",
+        "room_type": "Ocean Suite"
+      },
+      "transfers": [
+        {
+          "id": 1,
+          "day_id": 1,
+          "type": "airport",
+          "from_location": "Ngurah Rai Airport",
+          "to_location": "The Mulia",
+          "departure_time": "2024-06-01T13:00:00",
+          "arrival_time": "2024-06-01T14:00:00",
+          "notes": null
+        }
+      ],
+      "activities": [
+        {
+          "id": 1,
+          "day_id": 1,
+          "title": "Welcome Dinner",
+          "description": "Traditional Balinese dinner",
+          "start_time": "2024-06-01T19:00:00",
+          "end_time": "2024-06-01T22:00:00",
+          "location": "The Mulia Restaurant",
+          "cost": 75.0
+        }
+      ]
+    }
+  ]
+}
+```
+
+---
+
+### GET `/api/v1/itineraries/`
+
+**Get all itineraries**
+
+**Sample Response:**
+```json
+[
+  {
+    "id": 1,
+    "title": "Bali Adventure",
+    "description": "7-day trip to Bali",
+    "start_date": "2024-06-01T00:00:00",
+    "end_date": "2024-06-08T00:00:00",
+    "created_at": "2024-05-01T12:00:00",
+    "updated_at": null,
+    "days": [
+      {
+        "id": 1,
+        "trip_id": 1,
+        "day_number": 1,
+        "date": "2024-06-01T00:00:00",
+        "hotel": {
+          "id": 1,
+          "day_id": 1,
+          "name": "The Mulia",
+          "address": "Nusa Dua, Bali",
+          "check_in": "2024-06-01T14:00:00",
+          "check_out": "2024-06-02T12:00:00",
+          "room_type": "Ocean Suite"
+        },
+        "transfers": [
+          {
+            "id": 1,
+            "day_id": 1,
+            "type": "airport",
+            "from_location": "Ngurah Rai Airport",
+            "to_location": "The Mulia",
+            "departure_time": "2024-06-01T13:00:00",
+            "arrival_time": "2024-06-01T14:00:00",
+            "notes": null
+          }
+        ],
+        "activities": [
+          {
+            "id": 1,
+            "day_id": 1,
+            "title": "Welcome Dinner",
+            "description": "Traditional Balinese dinner",
+            "start_time": "2024-06-01T19:00:00",
+            "end_time": "2024-06-01T22:00:00",
+            "location": "The Mulia Restaurant",
+            "cost": 75.0
+          }
+        ]
+      }
+    ]
+  }
+]
+```
+
+---
+
+### GET `/api/v1/itineraries/{trip_id}`
+
+**Get a specific itinerary by ID**
+
+**Sample Response:**
+```json
+{
+  "id": 1,
+  "title": "Bali Adventure",
+  "description": "7-day trip to Bali",
+  "start_date": "2024-06-01T00:00:00",
+  "end_date": "2024-06-08T00:00:00",
+  "created_at": "2024-05-01T12:00:00",
+  "updated_at": null,
+  "days": [
+    {
+      "id": 1,
+      "trip_id": 1,
+      "day_number": 1,
+      "date": "2024-06-01T00:00:00",
+      "hotel": {
+        "id": 1,
+        "day_id": 1,
+        "name": "The Mulia",
+        "address": "Nusa Dua, Bali",
+        "check_in": "2024-06-01T14:00:00",
+        "check_out": "2024-06-02T12:00:00",
+        "room_type": "Ocean Suite"
+      },
+      "transfers": [
+        {
+          "id": 1,
+          "day_id": 1,
+          "type": "airport",
+          "from_location": "Ngurah Rai Airport",
+          "to_location": "The Mulia",
+          "departure_time": "2024-06-01T13:00:00",
+          "arrival_time": "2024-06-01T14:00:00",
+          "notes": null
+        }
+      ],
+      "activities": [
+        {
+          "id": 1,
+          "day_id": 1,
+          "title": "Welcome Dinner",
+          "description": "Traditional Balinese dinner",
+          "start_time": "2024-06-01T19:00:00",
+          "end_time": "2024-06-01T22:00:00",
+          "location": "The Mulia Restaurant",
+          "cost": 75.0
+        }
+      ]
+    }
+  ]
+}
+```
+
+---
 
 ## Database Schema
 
