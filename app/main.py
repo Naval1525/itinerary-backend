@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from .routes import itinerary
+from .routes import itinerary, mcp
 from .database import engine, Base
 
 # Create database tables
@@ -11,4 +11,5 @@ app = FastAPI(
     version="1.0.0"
 )
 
-app.include_router(itinerary.router, prefix="/api/v1", tags=["itineraries"]) 
+app.include_router(itinerary.router, prefix="/api/v1", tags=["itineraries"])
+app.include_router(mcp.router, prefix="/api/v1/mcp", tags=["mcp"]) 
