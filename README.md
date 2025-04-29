@@ -284,7 +284,7 @@ uvicorn app.main:app --reload
 ---
 
 
-### GET  `/api/v1/mcp/recommended-itineraries/`
+### GET  `/api/v1/mcp/recommended-itineraries/?nights={nights}`
 
 **Recommendation**
 
