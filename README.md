@@ -47,6 +47,9 @@ uvicorn app.main:app --reload
   `http://localhost:8000/api/v1/itineraries/`
 - **Get a specific itinerary by ID (GET):**  
   `http://localhost:8000/api/v1/itineraries/{trip_id}`
+- **Recommended itineraries from the database for a given number of nights (GET):**  
+  `http://localhost:8000/api/v1/mcp/recommended-itineraries/?nights={nights}`
+
 
 **Interactive API Docs:**  
 - Swagger UI: [http://localhost:8000/docs](http://localhost:8000/docs)  
@@ -275,6 +278,21 @@ uvicorn app.main:app --reload
       ]
     }
   ]
+}
+```
+
+---
+
+
+### GET  `/api/v1/mcp/recommended-itineraries/`
+
+**Recommendation**
+
+
+**Sample Response:**
+```json
+{
+  "gemini_recommendation": "I recommend the 'Phuket Paradise Getaway' itinerary for 4 nights in Phuket because it offers a great mix of relaxation and adventure, including a luxury hotel stay and a Phi Phi Islands tour."
 }
 ```
 
